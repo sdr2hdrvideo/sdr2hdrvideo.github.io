@@ -231,7 +231,7 @@ window.App.comparisonSection = (function () {
       // that the split-mode CSS relies on to identify panel[0] and panel[1].
       this.coverrAttrEl = document.createElement('span');
       this.coverrAttrEl.className = 'coverr-attribution';
-      this.coverrAttrEl.textContent = 'This video was sourced from coverr.co';
+      this.coverrAttrEl.textContent = 'Input SDR video sourced from coverr.co';
       this.coverrAttrEl.hidden = true;
       this.panelGrid.appendChild(this.coverrAttrEl);
 
