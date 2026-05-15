@@ -1,10 +1,191 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SDR2HDRVid</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generating HDR Video from SDR Video</title>
+  <link rel="stylesheet" href="./css/site.css">
 </head>
 <body>
-    <h1>Webpage coming soon!</h1>
+
+<!-- Display-mode prompt (SDR vs HDR) — shown once on first load -->
+<div id="displayModePrompt" class="picker-overlay" hidden>
+  <div class="picker-card picker-card-center">
+    <h2>Choose display mode</h2>
+    <p class="picker-chrome-notice">This demo works with Chrome 113+; recommended to open this page in Chrome.</p>
+
+    <div class="dmp-detect" data-role="dmpDetectBadge">
+      <span class="dmp-detect-dot"></span>
+      <span class="dmp-detect-text">checking display…</span>
+    </div>
+
+    <p data-role="dmpRecommend"></p>
+    <p class="dmp-multi" data-role="dmpMulti" hidden>
+      Multiple displays detected. If one of them is an HDR display, for the best experience, please open this window on the HDR display.
+    </p>
+    <p class="dmp-note" data-role="dmpNote" hidden>
+      This viewer has been tested on Mac HDR displays.
+    </p>
+    <p class="dmp-fineprint">You can switch modes any time using the SDR/HDR toggle in the floating control bar.</p>
+
+    <div class="dmp-buttons">
+      <button type="button" class="primary-btn" data-dm-choice="extended">Use HDR</button>
+      <button type="button" class="ghost-btn"   data-dm-choice="standard">Use SDR</button>
+    </div>
+  </div>
+</div>
+
+<!-- Fatal-error overlay -->
+<div id="fatalOverlay" class="fatal-overlay" hidden>
+  <div class="fatal-card">
+    <h2>Error or Browser feature missing</h2>
+    <p id="fatalMessage"></p>
+    <p class="fatal-hint">If browser feature related error. This page needs Chrome 113+ for WebGPU + VideoFrame.</p>
+  </div>
+</div>
+
+<main class="page">
+
+  <!-- ── Title ─────────────────────────────────────────────────────────── -->
+  <header class="paper-header">
+    <h1 class="paper-title">Generating HDR Video from SDR Video</h1>
+    <p class="paper-eyebrow">Supplementary Website</p>
+    <p class="chrome-notice">Best experienced in Google Chrome</p>
+  </header>
+
+  <!-- ── Abstract / intro ──────────────────────────────────────────────── -->
+  <section class="abstract">
+    <p>
+      We propose a framework for HDR video synthesis from casual SDR footage by
+      leveraging large-scale generative video models. A Multi-Exposure Video Model
+      (MEVM) predicts exposure-bracketed linear SDR video sequences from a single
+      nonlinear SDR input, and a learnable Video Merging Model (VMM) merges these
+      brackets into high-quality HDR, preserving detail in both shadows and
+      highlights. The viewer below presents side-by-side method comparisons
+      rendered from decoded HDR frames; scrub through frames, toggle
+      between SDR and HDR display, swap methods, and hover to inspect details.
+    </p>
+    <p class="abstract-hint">Scroll down to view results.</p>
+  </section>
+
+  <!-- ── Floating control bar (display + global look) ──────────────────── -->
+  <section class="control-bar" id="floatingNav">
+    <div class="control-bar-inner">
+
+      <div class="control-cell">
+        <span class="control-label">Display</span>
+        <div class="seg">
+          <input type="radio" name="toneMode" id="tmStandard" value="standard" checked>
+          <label for="tmStandard">SDR</label>
+          <input type="radio" name="toneMode" id="tmExtended" value="extended">
+          <label for="tmExtended">HDR</label>
+        </div>
+      </div>
+
+      <!-- Three global look sliders side by side -->
+      <div class="control-cell control-cell-grow inline-sliders" data-role="globalSliders"></div>
+
+      <div class="control-cell">
+        <button id="resetSlidersBtn" type="button" class="ghost-btn">reset</button>
+        <button id="infoBtn" type="button" class="info-btn" aria-label="diagnostics" title="diagnostics">i</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Comparison sections (mounted by main.js) ──────────────────────── -->
+  <!-- Section order: wild → cinema → text_to_video → datasets → limitations. -->
+  <section class="comp-section" data-section-id="wild">
+    <h2 class="section-h2">In-the-Wild Videos</h2>
+    <p class="section-desc">
+      Our method can even be applied to your own footage! Here we test our method on our own video albums and other arbitrarily sourced Internet video. Our method can generate clipped highlight regions and generate noisy quantized shadow regions.
+    </p>
+    <div class="comp-mount" data-mount="wild"></div>
+  </section>
+
+  <section class="comp-section" data-section-id="cinema">
+    <h2 class="section-h2">Cinema Moments</h2>
+    <p class="section-desc">
+      We demonstrate our method on iconic cinema footage. Our
+      pipeline produces temporally coherent HDR outputs that enhance detail in
+      both bright and dark regions without amplifying compression or grain noise.
+    </p>
+    <div class="comp-mount" data-mount="cinema"></div>
+  </section>
+
+  <section class="comp-section" data-section-id="text_to_video">
+    <h2 class="section-h2">Text-to-Video Generated</h2>
+    <p class="section-desc">
+      Our pipeline can be chained with an off-the-shelf SDR video generation
+      model to form a fully generative HDR video pipeline. We prompt a
+      text-to-video model with exposure-related keywords such as
+      &ldquo;very bright&rdquo;, &ldquo;sunny day&rdquo;, &ldquo;very dark&rdquo;,
+      and &ldquo;no lights&rdquo; to produce an SDR input, which is then lifted
+      to HDR; producing physically plausible dynamic-range expansion in
+      both highlights and shadows while preserving temporal coherence.
+    </p>
+    <div class="comp-mount" data-mount="text_to_video"></div>
+  </section>
+
+  <section class="comp-section" data-section-id="datasets">
+    <h2 class="section-h2">Results on Datasets</h2>
+    <p class="section-desc">
+      Comparisons against baselines on the <strong>Stuttgart</strong> and
+      <strong>UBC</strong> HDR benchmarks. Ground-truth HDR is available for each
+      scene, enabling direct comparison. Switch the input exposure
+      to inspect how each method handles over- and under-exposed inputs.
+    </p>
+    <div class="comp-mount" data-mount="datasets"></div>
+  </section>
+
+  <section class="comp-section" data-section-id="limitations">
+    <h2 class="section-h2">Limitations</h2>
+    <p class="section-desc">
+      Our fixed three-bracket exposure strategy cannot always recover the full
+      dynamic range of high-contrast scenes, leaving some outputs with residual
+      clipping after generation. We include representative failure cases to show
+      where the approach breaks down and guide future improvements.
+    </p>
+    <div class="comp-mount" data-mount="limitations"></div>
+  </section>
+
+  <footer class="paper-footer">
+    <p>supplementary website</p>
+  </footer>
+</main>
+
+<!-- ── Diagnostics popover (hidden behind info button) ─────────────────── -->
+<div id="infoPopover" class="info-popover" hidden>
+  <div class="info-card">
+    <div class="info-card-head">
+      <h3>Diagnostics</h3>
+      <button id="infoCloseBtn" type="button" class="ghost-btn" aria-label="close">close</button>
+    </div>
+    <div id="hdrBadge" class="hdr-badge" data-state="unknown">
+      <span class="hdr-dot"></span><span class="hdr-text">checking display&hellip;</span>
+    </div>
+    <div id="hdrHint" class="hdr-hint" hidden>
+      HDR display detected. For wider gamut in Chrome, enable
+      <code>chrome://flags/#enable-experimental-web-platform-features</code> and relaunch.
+    </div>
+    <div id="diagnostics" class="diag"></div>
+    <div id="loadStatus" class="load-status"></div>
+  </div>
+</div>
+
+<script defer src="./js/config.js"></script>
+<script defer src="./js/fileSource.js"></script>
+<script defer src="./js/hdrCapability.js"></script>
+<script defer src="./js/toneMappers.js"></script>
+<script defer src="./js/videoLoader.js"></script>
+<script defer src="./js/renderer.js"></script>
+<script defer src="./js/panel.js"></script>
+<script defer src="./js/syncController.js"></script>
+<script defer src="./js/ui.js"></script>
+<script defer src="./js/thumbnails.js"></script>
+<script defer src="./js/hoverZoom.js"></script>
+<script defer src="./js/comparisonSection.js"></script>
+<script defer src="./js/main.js"></script>
+
 </body>
 </html>

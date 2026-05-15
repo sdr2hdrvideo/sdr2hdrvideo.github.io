@@ -1,0 +1,1407 @@
+{
+  "generated_at": "2026-05-14T23:08:27.322895Z",
+  "structure": {
+    "stuttgart": {
+      "gt": {
+        "bistro_01": [
+          "GT"
+        ],
+        "bistro_02": [
+          "GT"
+        ],
+        "bistro_03": [
+          "GT"
+        ],
+        "carousel_fireworks_02": [
+          "GT"
+        ],
+        "fireplace_01": [
+          "GT"
+        ],
+        "hdr_testimage": [
+          "GT"
+        ],
+        "showgirl_01": [
+          "GT"
+        ],
+        "showgirl_02": [
+          "GT"
+        ],
+        "smith_welding": [
+          "GT"
+        ]
+      },
+      "over": {
+        "bistro_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "bistro_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "bistro_03": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "carousel_fireworks_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "fireplace_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "hdr_testimage": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "showgirl_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "showgirl_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "smith_welding": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      },
+      "under": {
+        "bistro_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "bistro_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "bistro_03": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "carousel_fireworks_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "fireplace_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "hdr_testimage": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "showgirl_01": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "showgirl_02": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "smith_welding": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      }
+    },
+    "ubc": {
+      "gt": {
+        "ChristmasTree": [
+          "GT"
+        ],
+        "GirlbyTable": [
+          "GT"
+        ],
+        "Hallway": [
+          "GT"
+        ],
+        "MainModel": [
+          "GT"
+        ],
+        "Playground": [
+          "GT"
+        ],
+        "Strangers": [
+          "GT"
+        ],
+        "video01_L": [
+          "GT"
+        ],
+        "video02_L": [
+          "GT"
+        ],
+        "video12_L": [
+          "GT"
+        ],
+        "video16_L": [
+          "GT"
+        ]
+      },
+      "over": {
+        "ChristmasTree": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "GirlbyTable": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Hallway": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "MainModel": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Playground": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Strangers": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video01_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video02_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video12_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video16_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      },
+      "under": {
+        "ChristmasTree": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "GirlbyTable": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Hallway": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "MainModel": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Playground": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Strangers": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video01_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video02_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video12_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "video16_L": [
+          "GT",
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      }
+    },
+    "wild": {
+      "cinema": {
+        "backtofuture_1280x704_17frames_from_50s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "ghostbusters1_1280x704_17frames_from_114s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "ghostbusters1_1280x704_17frames_from_155s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "jumanji1_1280x704_17frames_stride2_from_0p1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "jumanji1_1280x704_17frames_stride2_from_89p1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "karatekid1_1280x704_17frames_stride2_from_100s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "karatekid1_1280x704_17frames_stride2_from_24s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "karatekid1_1280x704_17frames_stride2_from_45s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "karatekid2_1280x704_17frames_stride2_from_466s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "mib_1280x704_17frames_from_42s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "spiderman2_1280x704_17frames_stride2_from_33s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "spiderman2_1280x704_17frames_stride2_from_48s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "spiderman2_1280x704_17frames_stride2_from_50s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "spiderman3_1280x704_17frames_stride2_from_298s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      },
+      "limitations": {
+        "20230416_130120": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "9737883-uhd_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_candlelit_dinner_table_filmed_in_near_darkness": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_car_wash_tunnel_with_jets_of_soapy_water_lit_from_above": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_flock_of_white_seagulls_flying_over_a_bright_ocean": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_person_walking_through_a_forest_at_dusk": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "output_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "over_carousel_fireworks_02": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      },
+      "text_to_video": {
+        "A_barista_pouring_latte_art_in_a_bright_cafe": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_barn_owl_hunting_over_a_dark_field_at_night": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_boat_wake_spreading_across_calm_water_in_full_sun": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_campfire_burning_on_a_bright_sunny_day_outdoors": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_child_playing_in_a_sprinkler_on_a_sunny_lawn": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_city_street_during_a_total_blackout_at_night": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_close-up_of_soap_bubbles_floating_in_bright_sunlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_coastal_cliff_top_with_crashing_waves_viewed_against_a_bright_sky": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_crow_perched_on_a_dark_fence_post_at_dusk_under_heavy_cloud_cover": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_cyclist_riding_along_a_coastal_road_at_midday": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_deer_grazing_in_a_meadow_at_predawn_with_no_sunrise_color_yet": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_factory_floor_with_sparks_flying_from_a_welding_station": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_flock_of_white_sheep_grazing_on_a_hillside_in_afternoon_sun": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_garden_at_night_with_no_exterior_lighting": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_golden_retriever_running_through_a_sunlit_park_in_slow_motion": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_greenhouse_interior_with_sunlight_streaming_through_glass_panels": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_hallway_in_an_old_hotel_with_most_lights_off": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_horse_standing_in_an_unlit_stable_at_night": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_hummingbird_hovering_near_bright_red_flowers_in_sunlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_kitchen_at_night_with_all_lights_off_and_minimal_moonlight_through_a_window": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_lone_wolf_walking_across_a_field_under_a_cloudy_moonless_night": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_market_fish_stall_with_ice_and_fresh_catches_on_a_sunny_day": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_medical_professional_in_a_white_coat_under_bright_clinical_lighting": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_motorbike_on_a_salt_flat_under_a_blazing_midday_sun": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_mountain_goat_standing_on_a_rocky_ridge_against_a_bright_sky": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_musician_playing_guitar_in_a_dark_corner_of_a_bar_with_no_spotlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_night_market_filmed_from_a_distance_with_poor_light_reach": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_nighttime_aerial_shot_of_farmland_far_from_any_city_lights": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_park_fountain_at_midnight_with_no_path_lighting": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_puppy_sitting_on_dark_grass_at_night_under_a_single_dim_streetlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_race_car_pit_stop_under_stadium_floodlights": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_rainy_night_street_filmed_from_inside_a_dark_building": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_river_at_night_with_moonlight_blocked_by_clouds": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_river_rapids_sequence_in_bright_midday_light": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_row_of_sailboats_rocking_in_a_harbor_on_a_sunny_day": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_scuba_diver_exploring_a_shipwreck_at_depth_in_low_visibility": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_skateboarder_performing_tricks_in_a_concrete_plaza_at_midday": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_sleeping_lion_in_the_shade_of_a_tree_at_dusk": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_slow-motion_close-up_of_a_dandelion_releasing_seeds_in_a_breeze": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_slow-motion_waterfall_in_a_deeply_shaded_forest_canyon": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_slow_pan_across_a_snowy_mountain_range_in_bright_sunlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_slow_zoom_into_a_white_marble_statue_in_direct_sunlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_small_fishing_boat_on_a_dark_sea_before_dawn": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_sports_car_accelerating_on_a_sunlit_highway": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_subway_car_interior_late_at_night_with_most_lights_off": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_subway_platform_between_trains_with_minimal_emergency_lighting": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_sun-drenched_terrace_cafe_with_white_tablecloths_and_parasols": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_swan_gliding_on_a_reflective_lake_surface_in_morning_sun": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_swimmer_doing_laps_in_an_outdoor_pool_on_a_sunny_day": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_tennis_player_serving_on_an_outdoor_court_in_direct_sunlight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_train_arriving_at_a_station_emerging_from_a_dark_tunnel_into_full_daylight": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_warehouse_interior_at_night_filmed_without_any_active_lighting": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_wedding_ceremony_in_an_outdoor_garden_at_midday": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "A_woman_walking_through_a_flower_field_in_summer": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "An_abandoned_building_interior_filmed_at_night": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "An_old_lighthouse_interior_at_night_with_no_working_lamp": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "An_underwater_cave_system_with_minimal_bioluminescence": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "Waves_crashing_on_a_white_sand_beach_at_noon": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      },
+      "wild": {
+        "12369387_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "12737869_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "12869656_3840_2160_25fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "14883069_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "14983682_3840_2160_30fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "15461946-hd_1920_1080_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "15820894_1920_1080_30fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "18898292-uhd_3840_2160_30fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20143554-uhd_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20220108_171246": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20220714_134928": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20221022_231855": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20221112_112549": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240516_164311": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240516_173013": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240518_172636": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240519_112818": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240522_113526": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20240523_090425": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20241008_153547": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250523_172032": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250528_205037": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250802_211857": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250819_140728": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250820_165537": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20250905_121349": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20251015_070811": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20251016_164706": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20251116_025034": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "20251202_134029": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "5379003-uhd_4096_2160_25fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "7983982-hd_1920_1080_25fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "8775877-uhd_3840_2160_25fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "9564079-uhd_4096_2160_25fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "9737883-uhd_3840_2160_24fps": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_0109_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_2349_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_3310_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_4224_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_4245_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_4251_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_4817_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_5313_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_5591_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_6032_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_8750_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "IMG_8763_1280x704_17frames_from_1s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20210625_174953736": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20251221_185536544": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20251221_202045234": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20251221_202450262": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260116_223002240": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260131_164227538": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260131_171026512": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260219_133158069": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260306_160156523": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "VID_20260307_213515484": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-albino-reindeer-886-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-cheering-crowd-1136-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-friends-playing-on-the-beach-8962-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-sparks-from-a-bonfire-3727-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-sunlight-shining-through-green-leaves-3256-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "coverr-view-of-a-shopping-mall-1583-1080p": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "irwin": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "tokyo_1280x704_17frames_from_0s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ]
+      }
+    }
+  }
+}

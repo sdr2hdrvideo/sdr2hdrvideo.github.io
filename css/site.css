@@ -1,0 +1,1641 @@
+/* ──────────────────────────────────────────────────────────────────────────
+ * site.css — paper-supplement style. Black canvas, academic typography,
+ * stacked comparison sections.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --bg:           #0a0a0a;
+  --bg-elev:      #141414;
+  --bg-elev-2:    #1c1c1c;
+  --border:       #242424;
+  --border-strong:#3a3a3a;
+  --text:         #efefef;
+  --text-muted:   #9a9a9a;
+  --text-faint:   #5e5e5e;
+  --accent:       #7aa7d9;
+  --accent-strong:#9bbde6;
+  --accent-dim:   rgba(122,167,217,0.18);
+  --warn:         #d9a86b;
+  --bad:          #d96e6e;
+  --ok:           #6bcf9e;
+
+  --font-serif: 'Charter', 'Sitka Text', 'Iowan Old Style', Cambria, Georgia, 'Times New Roman', serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:  ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  --page-max:   1480px;
+  --gutter:     32px;
+  --radius:     6px;
+  --radius-sm:  4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+a { color: var(--accent); }
+code { font-family: var(--font-mono); font-size: 0.9em; background: var(--bg-elev); padding: 1px 5px; border-radius: 3px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ── Page shell ─────────────────────────────────────────────────────── */
+/* The page now spans the full viewport width so video panels can use all
+   available horizontal space. Narrow blocks (paper-header, abstract,
+   floating nav inner, footer) are constrained individually below. */
+.page {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 48px var(--gutter) 96px;
+}
+
+/* Constrain text-heavy blocks to readable width while keeping the page
+   full-bleed for video grids. */
+.paper-header,
+.abstract,
+.paper-footer {
+  max-width: var(--page-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+.control-bar-inner {
+  max-width: var(--page-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Title / abstract ───────────────────────────────────────────────── */
+.paper-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.paper-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.paper-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.abstract {
+  max-width: 780px;
+  margin: 0 auto 40px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1.04rem;
+  line-height: 1.65;
+}
+.abstract p { margin: 0 0 0.8em; }
+.abstract-hint {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 18px;
+}
+.abstract-hint::before { content: '↓  '; }
+.abstract-hint::after  { content: '  ↓'; }
+
+/* ── Control bar (display + global look) ────────────────────────────
+ * Sticky-pinned floating nav. Holds: display SDR/HDR toggle, three look
+ * sliders (pivot, contrast, saturation) inline, then reset + info. */
+.control-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 56px;
+  /* slight backdrop blur so the bar reads cleanly over panel content */
+  backdrop-filter: saturate(140%) blur(6px);
+  -webkit-backdrop-filter: saturate(140%) blur(6px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.control-bar-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 22px;
+  padding: 12px 18px;
+}
+.control-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+}
+.control-cell-grow { flex: 1 1 320px; min-width: 280px; }
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+}
+.control-group-grow { flex: 1; min-width: 0; }
+.control-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.control-readonly {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+}
+.control-select {
+  font: inherit;
+  font-size: 0.86rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  min-width: 140px;
+}
+.control-select:hover { border-color: var(--border-strong); }
+.control-select:focus { outline: 1px solid var(--accent); outline-offset: -1px; }
+
+/* segmented SDR/HDR */
+.seg {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+}
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 4px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, color 0.15s;
+}
+.seg input:checked + label {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* exposure brackets */
+.bracket-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.bracket-btn {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 9px;
+  transition: all 0.12s;
+}
+.bracket-btn:hover { color: var(--text); border-color: var(--border-strong); }
+.bracket-btn.active {
+  background: var(--accent-dim);
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+.ghost-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+.ghost-btn:hover { color: var(--text); border-color: var(--border-strong); }
+
+.info-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.primary-btn {
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.primary-btn:hover { background: var(--accent-strong); }
+
+/* slider stack: 4 horizontal sliders across the full control-bar width */
+.slider-stack {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 4px 0 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 2px;
+  padding-top: 14px;
+}
+.slider-row { display: flex; flex-direction: column; gap: 6px; }
+.slider-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.slider-name {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.slider-value {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+}
+
+/* ── Comparison sections ────────────────────────────────────────────── */
+.comp-section {
+  margin-top: 84px;
+  scroll-margin-top: 24px;
+}
+.section-h2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 10px;
+  color: var(--text);
+}
+.section-desc {
+  color: var(--text-muted);
+  margin: 0 0 26px;
+  line-height: 1.6;
+  font-size: 1.0rem;
+}
+
+/* tab toggles inside a section (e.g. dataset / exposure) */
+.tab-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.tab-row-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.tab-row-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.pill-tabs {
+  display: inline-flex;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px;
+}
+.pill-tab {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  letter-spacing: 0.04em;
+}
+.pill-tab.active {
+  background: var(--accent);
+  color: var(--bg);
+}
+.pill-tab:not(.active):hover { color: var(--text); }
+
+/* thumbnail rail */
+.thumb-rail-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+.thumb-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 2px 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.thumb-rail::-webkit-scrollbar { height: 8px; }
+.thumb-rail::-webkit-scrollbar-track { background: transparent; }
+.thumb-rail::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+
+.thumb-card {
+  flex: 0 0 auto;
+  width: 160px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  padding: 0;
+  text-align: left;
+}
+.thumb-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+}
+.thumb-card.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.thumb-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000 linear-gradient(135deg, #1a1a1a 25%, #232323 25%, #232323 50%, #1a1a1a 50%, #1a1a1a 75%, #232323 75%) 0 0 / 14px 14px;
+  display: block;
+  object-fit: cover;
+}
+.thumb-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  padding: 7px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.thumb-card.active .thumb-card-label { color: var(--accent-strong); }
+
+/* method picker row above panels */
+.method-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.method-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.method-cell-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.method-select {
+  flex: 1;
+  font: inherit;
+  font-size: 0.92rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+.method-select:hover { border-color: var(--border-strong); }
+
+/* panel grid (2 video canvases side-by-side, full row width) */
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+.panel {
+  position: relative;
+  background: #000;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.panel canvas {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+}
+.panel-overlay {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  background: rgba(0,0,0,0.55);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 4px 9px;
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 3;
+}
+.panel-overlay-corner {
+  /* Resolution badge (e.g. "1920×1080") was previously placed here. The
+     published view hides it; we keep the rule scoped to display:none so
+     setCornerInfo callers can still set the node's textContent for
+     debugging without touching layout. */
+  display: none;
+}
+.panel-loading::after {
+  content: 'loading…';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: #000;
+  z-index: 2;
+}
+.panel-error::after {
+  content: attr(data-error);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--bad);
+  background: #000;
+  padding: 16px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* hover-zoom magnifier lens (overlay on each panel) */
+.zoom-lens {
+  position: absolute;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  display: none;
+  z-index: 4;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6);
+}
+
+/* playback bar */
+.playback-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-top: 0;
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: -1px;
+}
+.playback-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.playback-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
+.playback-frame {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 80px;
+}
+.playback-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.frame-readout {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.scrub {
+  flex: 1;
+}
+.playback-fps {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.fps-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.fps-input {
+  width: 50px;
+  font: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px 6px;
+  text-align: center;
+}
+.playback-status {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  min-width: 90px;
+  text-align: right;
+}
+/* Hide the resting "ready" state — it occupies space next to the
+   display-mode toggle without conveying any information once a scene is
+   loaded. Loading and error states still display.  We zero out min-width
+   too so the playback bar doesn't reserve empty space. */
+.playback-status[data-state="ready"] {
+  display: none;
+  min-width: 0;
+}
+.playback-status[data-state="loading"] { color: var(--warn); }
+.playback-status[data-state="error"]   { color: var(--bad); }
+
+/* hover-zoom drawer (collapsible side-by-side magnified view) */
+.zoom-drawer {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  overflow: hidden;
+}
+.zoom-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+  user-select: none;
+  /* Distinct elevated band so it doesn't look like inert chrome. */
+  background: var(--bg-elev-2);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.zoom-drawer-head:hover { background: #232323; }
+.zoom-drawer-head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.zoom-drawer-title {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;        /* up from 0.78rem */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);        /* full brightness (was muted) */
+}
+.zoom-drawer-title::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--accent-strong);
+  font-size: 1.05em;          /* bigger chevron — clearer affordance */
+  transition: transform 0.18s;
+}
+.zoom-drawer.open .zoom-drawer-title::before { transform: rotate(90deg); }
+.zoom-drawer-controls { display: inline-flex; gap: 18px; align-items: center; }
+
+/* Promoted zoom slider — bigger track + thumb + value readout so the
+ * inspector's primary control reads as an interactive affordance instead
+ * of UI chrome. The label stays compact but legible. */
+.zoom-drawer-zoom-label {
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  color: var(--text);
+}
+.zoom-drawer-controls input[type="range"].zoom-drawer-zoom-range {
+  width: 180px;
+  height: 6px;
+  background: var(--border-strong);
+}
+.zoom-drawer-controls input[type="range"].zoom-drawer-zoom-range::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent-strong);
+  box-shadow: 0 0 0 2px rgba(122, 167, 217, 0.25);
+}
+.zoom-drawer-controls input[type="range"].zoom-drawer-zoom-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent-strong);
+  border: none;
+}
+.zoom-drawer-zoom-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+  min-width: 34px;
+  text-align: right;
+}
+
+/* Show-box checkbox — toggles the lens overlay without affecting the
+ * inspector itself. Default is enabled. */
+.zoom-drawer-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+}
+.zoom-drawer-checkbox input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  cursor: pointer;
+}
+.zoom-drawer-checkbox:hover { color: var(--text); }
+.zoom-drawer-body {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: #000;
+}
+.zoom-drawer.open .zoom-drawer-body { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.zoom-panel {
+  position: relative;
+  background: #000;
+  min-height: 260px;
+  height: 320px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zoom-panel canvas { display: block; width: 100%; height: 100%; }
+.zoom-panel-label {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  background: rgba(0,0,0,0.55);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  z-index: 2;
+}
+.zoom-empty {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* ── Diagnostics popover ────────────────────────────────────────────── */
+.info-popover {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.info-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  width: min(460px, 92vw);
+  max-height: 80vh;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+.info-card h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+.info-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+
+.hdr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 0.74rem;
+  margin-bottom: 12px;
+}
+.hdr-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+.hdr-badge[data-state="hdr"] .hdr-dot { background: var(--ok); }
+.hdr-badge[data-state="sdr"] .hdr-dot { background: var(--warn); }
+.hdr-hint {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.diag {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--text-muted);
+}
+.diag .diag-ok   { color: var(--ok); }
+.diag .diag-warn { color: var(--warn); }
+.diag .diag-bad  { color: var(--bad); }
+.load-status {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ── Picker / fatal overlays ────────────────────────────────────────── */
+.picker-overlay, .fatal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+}
+.picker-card, .fatal-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px 32px;
+  width: min(520px, 92vw);
+}
+.picker-card h2, .fatal-card h2 {
+  font-family: var(--font-serif);
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+}
+.picker-card p, .fatal-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin: 0 0 10px;
+}
+.picker-error { color: var(--bad); }
+.picker-alt { color: var(--text-faint); font-size: 0.82rem; margin-top: 16px; }
+.fatal-hint { font-size: 0.82rem; color: var(--text-faint); }
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Chrome requirement notice — large amber badge shown in the page header
+ * and smaller inline variants in the picker/prompt overlays.
+ * ────────────────────────────────────────────────────────────────────── */
+.chrome-notice {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--warn);
+  background: rgba(217, 168, 107, 0.1);
+  border: 1px solid rgba(217, 168, 107, 0.45);
+  border-radius: var(--radius);
+  padding: 9px 22px;
+  margin: 16px 0 0;
+}
+
+.picker-chrome-notice {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--warn);
+  background: rgba(217, 168, 107, 0.08);
+  border: 1px solid rgba(217, 168, 107, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  margin: 14px 0 0;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────── */
+.paper-footer {
+  margin-top: 100px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .control-bar-inner { gap: 14px; }
+  .panel-grid { grid-template-columns: 1fr; }
+  .method-row { grid-template-columns: 1fr; }
+  .slider-stack { grid-template-columns: 1fr 1fr; }
+  .paper-title { font-size: 2.2rem; }
+  .comp-controls { grid-template-columns: 1fr; }
+  .link-toggle { justify-self: center; transform: rotate(90deg); }
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Picker primary-button — make the inline <code> readable against the
+ * accent background. Default `code` styling is bg-elev with default text,
+ * which renders as black-on-black on the picker button. Override here.
+ * ────────────────────────────────────────────────────────────────────── */
+.primary-btn-code {
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Inline sliders (used in the floating nav: pivot / contrast / saturation)
+ * ────────────────────────────────────────────────────────────────────── */
+.inline-sliders {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.inline-slider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 0;
+  min-width: 180px;
+}
+.inline-slider .control-label { flex: 0 0 auto; }
+.inline-slider-range { flex: 1 1 100px; min-width: 80px; }
+.inline-slider .slider-value {
+  flex: 0 0 auto;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Per-panel control row: two control blocks with a link toggle between.
+ * Grid columns: 1fr [auto link] 1fr.
+ * Each block stacks: method select / tone-mapper select / exposure
+ * slider / bracket buttons.
+ * ────────────────────────────────────────────────────────────────────── */
+.comp-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.panel-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+.pc-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pc-row.pc-method,
+.pc-row.pc-tone {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.pc-row.pc-method .control-label,
+.pc-row.pc-tone   .control-label { flex: 0 0 auto; min-width: 90px; }
+
+.method-select,
+.tone-select {
+  flex: 1;
+  font: inherit;
+  font-size: 0.92rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+.method-select:hover,
+.tone-select:hover { border-color: var(--border-strong); }
+.tone-select:disabled,
+.tone-select.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+  color: var(--text-faint);
+}
+
+.panel-slider { display: flex; flex-direction: column; gap: 4px; }
+.panel-slider-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.panel-slider-range { width: 100%; }
+
+/* Link/chain toggle in the middle column. */
+.link-toggle {
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: all 0.15s;
+}
+.link-toggle:hover { color: var(--text); border-color: var(--border-strong); }
+.link-toggle.active {
+  background: var(--accent-dim);
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Bracket-button rows inside the per-panel control blocks — slightly
+ * tighter than the legacy global bracket row, centered so the full
+ * ±4 EV range stays visually balanced. Force horizontal direction
+ * here because the parent `.pc-row` class sets flex-direction: column
+ * for every other control row, which would otherwise stack the EV
+ * buttons vertically.
+ * ────────────────────────────────────────────────────────────────────── */
+.pc-brackets.bracket-row {
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.pc-brackets .bracket-btn { padding: 3px 7px; font-size: 0.72rem; }
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Link-toggle cell — wraps the chain button with a "Link" caption beneath
+ * so reviewers immediately understand the affordance.
+ * ────────────────────────────────────────────────────────────────────── */
+.link-toggle-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  align-self: center;
+}
+.link-toggle-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  user-select: none;
+}
+.link-toggle-cell .link-toggle.active + .link-toggle-label {
+  color: var(--accent-strong);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Comparison stage — panel-grid + scene prompt + playback bar. This is
+ * the element we promote to fullscreen so all three pieces stay together.
+ * In normal flow it behaves as a block; in fullscreen it becomes a flex
+ * column that fills the viewport.
+ * ────────────────────────────────────────────────────────────────────── */
+.comp-stage {
+  display: block;
+  position: relative;
+}
+
+.comp-stage:fullscreen,
+.comp-stage:-webkit-full-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  padding: 0;
+  margin: 0;
+}
+.comp-stage:fullscreen .panel-grid,
+.comp-stage:-webkit-full-screen .panel-grid {
+  flex: 1 1 auto;
+  border-radius: 0;
+  min-height: 0;
+}
+.comp-stage:fullscreen .panel-grid .panel canvas,
+.comp-stage:-webkit-full-screen .panel-grid .panel canvas {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.comp-stage:fullscreen .playback-bar,
+.comp-stage:-webkit-full-screen .playback-bar {
+  border-radius: 0;
+  margin-top: 0;
+  flex: 0 0 auto;
+}
+.comp-stage:fullscreen .scene-prompt,
+.comp-stage:-webkit-full-screen .scene-prompt {
+  flex: 0 0 auto;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Split-screen slider display mode. data-display="side" keeps the
+ * original 2-col grid; data-display="split" overlays both panels in the
+ * same area and reveals the right one via a clip-path driven by the
+ * --split-pos custom property.
+ * ────────────────────────────────────────────────────────────────────── */
+.panel-grid[data-display="side"]  .split-divider { display: none; }
+.panel-grid[data-display="split"] {
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.panel-grid[data-display="split"] > .panel {
+  grid-column: 1;
+  grid-row: 1;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* Left panel sits underneath; right panel is clipped to reveal only the
+   region right of the divider. */
+.panel-grid[data-display="split"] > .panel:nth-of-type(1) {
+  z-index: 1;
+}
+.panel-grid[data-display="split"] > .panel:nth-of-type(2) {
+  z-index: 2;
+  clip-path: inset(0 0 0 var(--split-pos, 50%));
+}
+.panel-grid[data-display="split"] > .panel canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+/* Make sure split-mode panel-grid has a real height since the panels
+   are absolutely positioned (and would collapse otherwise). */
+.panel-grid[data-display="split"] {
+  min-height: 60vh;
+}
+.comp-stage:fullscreen .panel-grid[data-display="split"],
+.comp-stage:-webkit-full-screen .panel-grid[data-display="split"] {
+  min-height: 0;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Split divider — vertical bar with a circular grip the user drags.
+ * Only interactive in split mode (see [data-display] rules above).
+ * ────────────────────────────────────────────────────────────────────── */
+.split-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split-pos, 50%);
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
+  cursor: ew-resize;
+  z-index: 3;
+  touch-action: none;
+  user-select: none;
+}
+.split-divider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.split-divider-handle::before,
+.split-divider-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border: solid var(--bg);
+  border-width: 0 0 0 2px;
+}
+.split-divider-handle::before { left: 6px;  transform: rotate(45deg); border-width: 2px 0 0 2px; }
+.split-divider-handle::after  { right: 6px; transform: rotate(45deg); border-width: 0 2px 2px 0; }
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Display-mode toggle (Side / Slider) inside the playback bar.
+ * ────────────────────────────────────────────────────────────────────── */
+.display-mode-toggle {
+  display: inline-flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+}
+.dm-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.dm-btn:hover:not(.active) { color: var(--text); }
+.dm-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Fullscreen button (icon only, sits at the right edge of the playback
+ * bar where the "ready" status used to be the visual anchor).
+ * ────────────────────────────────────────────────────────────────────── */
+.fullscreen-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+}
+.fullscreen-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* In fullscreen we hide the redundant fullscreen-button glyph swap: we
+   still toggle the same button. Just keep status readable on black bg. */
+.comp-stage:fullscreen .playback-status,
+.comp-stage:-webkit-full-screen .playback-status {
+  color: var(--text-muted);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * FPS slider — replaces the old text box. The .playback-fps wrapper
+ * already provides inline-flex layout; we just size the range itself.
+ * ────────────────────────────────────────────────────────────────────── */
+input[type="range"].fps-slider {
+  width: 90px;
+  height: 4px;
+}
+.fps-value {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text);
+  min-width: 22px;
+  text-align: right;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Coverr attribution — tiny label overlaid on the bottom-right corner of
+ * the panel-grid for wild scenes sourced from coverr.co.
+ * ────────────────────────────────────────────────────────────────────── */
+.coverr-attribution {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 5px;
+  border-radius: 3px;
+  pointer-events: none;
+  z-index: 4;
+  line-height: 1.3;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Scene title — shown below the panel-grid for cinema scenes. Sits
+ * between the panel-grid and the playback bar, styled to match
+ * .scene-prompt so the visual seam is consistent.
+ * ────────────────────────────────────────────────────────────────────── */
+.scene-title {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 9px 16px;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.comp-stage:fullscreen .scene-title,
+.comp-stage:-webkit-full-screen .scene-title {
+  background: #000;
+  border: 0;
+  color: var(--text-muted);
+  padding: 10px 24px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Scene prompt — sits above the playback bar, used for the text_to_video
+ * section. Italic serif so it reads as quoted text rather than UI chrome.
+ * ────────────────────────────────────────────────────────────────────── */
+.scene-prompt {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.0rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 10px 16px;
+  background: var(--bg-elev);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.scene-prompt::before { content: '\201C'; }  /* left double-quote */
+.scene-prompt::after  { content: '\201D'; }  /* right double-quote */
+.comp-stage:fullscreen .scene-prompt,
+.comp-stage:-webkit-full-screen .scene-prompt {
+  background: #000;
+  border: 0;
+  color: var(--text);
+  font-size: 1.15rem;
+  padding: 14px 24px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Display-mode prompt — shown after the folder picker. SDR/HDR choice.
+ * ────────────────────────────────────────────────────────────────────── */
+.dmp-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  align-items: center;
+  justify-content: center;
+}
+.dmp-buttons .primary-btn,
+.dmp-buttons .ghost-btn {
+  font-size: 0.95rem;
+}
+.dmp-buttons .primary-btn[disabled],
+.dmp-buttons .ghost-btn[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Picker variant where the call-to-action button is centered. */
+.picker-card-center { text-align: center; }
+.picker-card-center p { text-align: center; }
+.picker-action {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 6px;
+}
+
+/* HDR-detection badge on the display-mode prompt. Mirrors the diagnostics
+ * hdr-badge styling but lives in the picker card so reviewers immediately
+ * see whether their display was identified as HDR-capable. */
+.dmp-detect {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 4px auto 16px;
+}
+.dmp-detect-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  box-shadow: 0 0 0 0 transparent;
+}
+.dmp-detect[data-state="hdr"] {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+.dmp-detect[data-state="hdr"] .dmp-detect-dot {
+  background: var(--ok);
+  box-shadow: 0 0 0 4px rgba(107, 207, 158, 0.18);
+}
+.dmp-detect[data-state="sdr"] {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.dmp-detect[data-state="sdr"] .dmp-detect-dot {
+  background: var(--warn);
+}
+
+.dmp-multi {
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+.dmp-note {
+  color: var(--text-faint);
+  font-size: 0.86rem;
+}
+.dmp-fineprint {
+  color: var(--text-faint);
+  font-size: 0.82rem;
+  margin-top: 14px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Zoom-drawer toggle pill — sits on the right edge of the drawer header.
+ * The bare chevron wasn't reading as interactive to reviewers; the pill
+ * gives an unambiguous label that flips between "Hide" and "Show" via
+ * the .open class on the drawer root.
+ * ────────────────────────────────────────────────────────────────────── */
+.zoom-drawer-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex: 0 0 auto;
+}
+.zoom-drawer-toggle:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Folder-picker non-fatal warning — orange, distinct from the red error.
+ * ────────────────────────────────────────────────────────────────────── */
+.picker-warn {
+  color: var(--warn);
+  background: rgba(217, 168, 107, 0.08);
+  border: 1px solid rgba(217, 168, 107, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  text-align: left;
+  margin: 10px 0 0;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Fullscreen scene strip — vertical thumbnail rail anchored to the left
+ * edge of the comp-stage. Shown ONLY in fullscreen so users can switch
+ * scenes without exiting; hidden in normal flow because the regular
+ * thumb-rail above the panels already covers that affordance.
+ *
+ * .fs-stage-content wraps the panel-grid + scene-prompt + playback-bar
+ * so the strip can sit beside them in a flex row when fullscreen.
+ * ────────────────────────────────────────────────────────────────────── */
+.fs-scene-strip {
+  display: none;   /* hidden by default; revealed in fullscreen below */
+}
+.fs-stage-content {
+  display: contents;   /* layout-neutral in normal flow */
+}
+
+.comp-stage:fullscreen,
+.comp-stage:-webkit-full-screen {
+  flex-direction: row;   /* override the column flex set elsewhere */
+}
+.comp-stage:fullscreen .fs-stage-content,
+.comp-stage:-webkit-full-screen .fs-stage-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+.comp-stage:fullscreen .fs-scene-strip,
+.comp-stage:-webkit-full-screen .fs-scene-strip {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 130px;
+  width: 130px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #000;
+  border-right: 1px solid var(--border);
+  padding: 8px 6px;
+  gap: 8px;
+}
+.fs-scene-card {
+  flex: 0 0 auto;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.fs-scene-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.fs-scene-card.active {
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.fs-scene-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Hide the hover-zoom lens cursor box in fullscreen. The lens overlay
+ * exists to show users where the inspector is sampling, but the
+ * inspector itself doesn't render in fullscreen (the drawer lives
+ * outside .comp-stage). With no inspector visible, the floating
+ * rectangle was just visual noise on the canvas.
+ * ────────────────────────────────────────────────────────────────────── */
+.comp-stage:fullscreen .zoom-lens,
+.comp-stage:-webkit-full-screen .zoom-lens {
+  display: none !important;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Custom scrollbar for the fullscreen scene strip. The Windows default
+ * scrollbar is distracting against the all-black fullscreen background.
+ * ────────────────────────────────────────────────────────────────────── */
+.comp-stage:fullscreen .fs-scene-strip,
+.comp-stage:-webkit-full-screen .fs-scene-strip {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.comp-stage:fullscreen .fs-scene-strip::-webkit-scrollbar,
+.comp-stage:-webkit-full-screen .fs-scene-strip::-webkit-scrollbar {
+  width: 5px;
+}
+.comp-stage:fullscreen .fs-scene-strip::-webkit-scrollbar-track,
+.comp-stage:-webkit-full-screen .fs-scene-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.comp-stage:fullscreen .fs-scene-strip::-webkit-scrollbar-thumb,
+.comp-stage:-webkit-full-screen .fs-scene-strip::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Playback-bar exposure control. Reuses the .fps-label / .fps-value /
+ * .fps-slider styles so it looks identical to the FPS control.
+ * ────────────────────────────────────────────────────────────────────── */
+.pb-exposure-host {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * In Slider (split) mode the right panel's label should sit at the
+ * top-right edge so it's always legible — the left portion of the
+ * right panel is clipped by the split divider.
+ * ────────────────────────────────────────────────────────────────────── */
+.panel-grid[data-display="split"] > .panel:nth-of-type(2) .panel-overlay {
+  left: auto;
+  right: 12px;
+}
