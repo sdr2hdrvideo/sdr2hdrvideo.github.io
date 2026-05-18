@@ -56,7 +56,7 @@ window.App.toneMappers = (function () {
   })();
   // Multiplier applied on top of the existing /1000 PQ normalisation on
   // Safari. 5.0 cancels the observed 5× dimming. Set to 1.0 to disable.
-  const SAFARI_HDR_BOOST = IS_SAFARI ? '5.0' : '1.0';
+  const SAFARI_HDR_BOOST = IS_SAFARI ? '10.0' : '1.0';
 
   /* ════════════════════════════════════════════════════════════════════════
    * Shared bits used by every WGSL block below.

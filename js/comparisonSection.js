@@ -268,7 +268,10 @@ window.App.comparisonSection = (function () {
           <button type="button" class="dm-btn ${this.displayMode === 'split' ? 'active' : ''}" data-mode="split" title="Split-screen slider">Slider</button>
         </div>
         <button class="fullscreen-btn" type="button" data-role="fullscreen"
-                aria-label="toggle fullscreen" title="Toggle fullscreen">⛶</button>
+                aria-label="toggle fullscreen" title="Toggle fullscreen">
+          <span class="fs-icon" aria-hidden="true">⛶</span>
+          <span class="fs-label">Full Screen</span>
+        </button>
       `;
       this.fsContent.appendChild(this.playbackBar);
 
@@ -963,41 +966,77 @@ window.App.comparisonSection = (function () {
       const btn = this.playbackBar.querySelector('[data-role="fullscreen"]');
       if (!btn) return;
       const stage = this.compStage;
-      btn.addEventListener('click', () => {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-          (stage.requestFullscreen || stage.webkitRequestFullscreen)?.call(stage);
-        } else {
-          (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
-        }
-      });
-      const onChange = () => {
-        const fs = (document.fullscreenElement === stage) ||
-                   (document.webkitFullscreenElement === stage);
-        stage.dataset.fullscreen = fs ? '1' : '0';
-        btn.classList.toggle('active', fs);
-        if (fs) {
-          // Entering fullscreen: re-center the split divider so users
-          // always start from a known reference position regardless of
-          // where they left it before going fullscreen.
-          this.splitPosition = 50;
-        }
-        // Auto-switch display mode on entering fullscreen. On a phone
-        // in portrait the split-slider canvas ends up taller than it is
-        // wide and the divider is awkward to drag with a thumb, so we
-        // default to side-by-side (two panels stacked vertically). On
-        // landscape phones and desktop the split-slider view reads
-        // better, so we keep the original 'split' default there. On
-        // exit we leave whatever mode the user had.
-        if (fs) {
-          const portraitPhone = window.matchMedia(
-            '(max-width: 720px) and (orientation: portrait)').matches;
-          this._setDisplayMode(portraitPhone ? 'side' : 'split');
-        }
-        // After enter/exit, canvases need to resize to the new container.
+      let pseudoFS = false;
+
+      const _syncCanvases = () => {
         requestAnimationFrame(() => {
           for (const p of this.panels) p._syncCanvasSize && p._syncCanvasSize();
           this._applySplitPosition();
         });
+      };
+
+      const _onEnter = () => {
+        stage.dataset.fullscreen = '1';
+        btn.classList.add('active');
+        this.splitPosition = 50;
+        const portraitPhone = window.matchMedia(
+          '(max-width: 720px) and (orientation: portrait)').matches;
+        this._setDisplayMode(portraitPhone ? 'side' : 'split');
+        _syncCanvases();
+      };
+
+      const _onExit = () => {
+        stage.dataset.fullscreen = '0';
+        btn.classList.remove('active');
+        _syncCanvases();
+      };
+
+      // CSS pseudo-fullscreen: position: fixed overlay used when the native
+      // Fullscreen API is unavailable (iOS Safari in regular browser tabs).
+      const enterPseudoFS = () => {
+        pseudoFS = true;
+        stage.classList.add('pseudo-fullscreen');
+        document.body.style.overflow = 'hidden';
+        _onEnter();
+      };
+
+      const exitPseudoFS = () => {
+        pseudoFS = false;
+        stage.classList.remove('pseudo-fullscreen');
+        document.body.style.overflow = '';
+        _onExit();
+      };
+
+      btn.addEventListener('click', () => {
+        if (pseudoFS) { exitPseudoFS(); return; }
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+          (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+          return;
+        }
+        // Try native fullscreen; fall back to pseudo-FS on rejection (iOS Safari).
+        const req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+        if (req) {
+          let p;
+          try { p = req.call(stage); } catch (_e) { p = null; }
+          if (p && typeof p.catch === 'function') {
+            p.catch(() => enterPseudoFS());
+          }
+          // If req exists but returns nothing (old webkit), assume it worked;
+          // the fullscreenchange event will confirm.
+        } else {
+          enterPseudoFS();
+        }
+      });
+
+      // Escape dismisses pseudo-FS (native FS handles Escape natively).
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && pseudoFS) exitPseudoFS();
+      });
+
+      const onChange = () => {
+        const fs = (document.fullscreenElement === stage) ||
+                   (document.webkitFullscreenElement === stage);
+        if (fs) { _onEnter(); } else { _onExit(); }
       };
       document.addEventListener('fullscreenchange', onChange);
       document.addEventListener('webkitfullscreenchange', onChange);
