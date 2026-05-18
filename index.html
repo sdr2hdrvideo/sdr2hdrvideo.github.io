@@ -82,12 +82,19 @@
         </div>
       </div>
 
-      <!-- Three global look sliders side by side -->
+      <!-- Three global look sliders side by side. Hidden in the collapsed
+           mobile state; revealed when the bar is expanded. -->
       <div class="control-cell control-cell-grow inline-sliders" data-role="globalSliders"></div>
 
-      <div class="control-cell">
+      <div class="control-cell control-cell-actions">
         <button id="resetSlidersBtn" type="button" class="ghost-btn">reset</button>
         <button id="infoBtn" type="button" class="info-btn" aria-label="diagnostics" title="diagnostics">i</button>
+        <!-- Mobile-only expand/collapse toggle. Hidden on desktop via CSS. -->
+        <button id="controlBarToggle" type="button" class="control-bar-toggle"
+                aria-expanded="false" aria-controls="floatingNav"
+                aria-label="more controls" title="more controls">
+          <span class="cb-toggle-icon" aria-hidden="true">▾</span>
+        </button>
       </div>
 
     </div>

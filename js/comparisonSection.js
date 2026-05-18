@@ -67,12 +67,12 @@ window.App.comparisonSection = (function () {
   const evToMul = (ev) => Math.pow(2, ev);
   const mulToEv = (mul) => Math.log2(Math.max(mul, 1e-6));
 
-  // Exposure slider in EV space. Brackets stretch to ±4 EV; the slider
-  // mirrors that range.
+  // Exposure slider in EV space. Bracket buttons cover ±4 EV (common cases);
+  // the slider extends to ±8 EV for scenes that need extreme adjustment.
   const EXPOSURE_FIELD = {
     name: 'exposure',
     label: 'exposure (EV)',
-    min: -4, max: 4, step: 0.1, default: 0,
+    min: -8, max: 8, step: 0.1, default: 0,
   };
 
   class ComparisonSection {
@@ -923,7 +923,7 @@ window.App.comparisonSection = (function () {
       const expSlider = document.createElement('input');
       expSlider.type = 'range';
       expSlider.className = 'fps-slider pb-exposure-slider';
-      expSlider.min = '-4'; expSlider.max = '4'; expSlider.step = '0.1'; expSlider.value = '0';
+      expSlider.min = '-8'; expSlider.max = '8'; expSlider.step = '0.1'; expSlider.value = '0';
       expSlider.setAttribute('aria-label', 'exposure (EV)');
       const expVal = document.createElement('span');
       expVal.className = 'fps-value';
@@ -981,9 +981,18 @@ window.App.comparisonSection = (function () {
           // where they left it before going fullscreen.
           this.splitPosition = 50;
         }
-        // Auto-switch display mode: split on enter, side on exit (only
-        // when entering FS; on exit we keep whatever the user had).
-        if (fs) this._setDisplayMode('split');
+        // Auto-switch display mode on entering fullscreen. On a phone
+        // in portrait the split-slider canvas ends up taller than it is
+        // wide and the divider is awkward to drag with a thumb, so we
+        // default to side-by-side (two panels stacked vertically). On
+        // landscape phones and desktop the split-slider view reads
+        // better, so we keep the original 'split' default there. On
+        // exit we leave whatever mode the user had.
+        if (fs) {
+          const portraitPhone = window.matchMedia(
+            '(max-width: 720px) and (orientation: portrait)').matches;
+          this._setDisplayMode(portraitPhone ? 'side' : 'split');
+        }
         // After enter/exit, canvases need to resize to the new container.
         requestAnimationFrame(() => {
           for (const p of this.panels) p._syncCanvasSize && p._syncCanvasSize();

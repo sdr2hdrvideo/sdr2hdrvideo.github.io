@@ -80,6 +80,7 @@
 
     setupToneModeRadio();
     setupGlobalSliders();
+    setupControlBarToggle();
     setupKeyboard();
 
     // ── Manifest ──────────────────────────────────────────────────────
@@ -240,6 +241,22 @@
         for (const s of appState.sections) s.onGlobalUniformsChanged();
       });
     }
+  }
+
+  /**
+   * Mobile-only: expand/collapse toggle on the floating control bar.
+   * The bar starts collapsed on mobile (CSS hides the sliders + reset
+   * by default at small viewports). The toggle button flips an
+   * `.expanded` class on the bar, revealing the rest of the controls.
+   */
+  function setupControlBarToggle() {
+    const bar = document.getElementById('floatingNav');
+    const btn = document.getElementById('controlBarToggle');
+    if (!bar || !btn) return;
+    btn.addEventListener('click', () => {
+      const expanded = bar.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
   }
 
   /**
