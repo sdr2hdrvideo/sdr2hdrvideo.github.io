@@ -37,6 +37,28 @@ window.App.toneMappers = (function () {
   'use strict';
 
   /* ════════════════════════════════════════════════════════════════════════
+   * Browser-specific HDR brightness correction.
+   *
+   * The PQ linearize variants below divide by 1000 instead of the strict
+   * 10000 nits → 1.0 normalisation, which is the existing "10× boost" that
+   * makes HDR methods line up with the SDR Input on Chrome / Edge.
+   *
+   * Emperically I saw, that Safari (Mac + iOS, all WebKit) renders the same HDR textures roughly
+   * 5× dimmer than Chrome which could be matched via EV adjustment of +5 EV of HDR methods to match the SDR Input. We compensate at the linearize stage with an additional multiplier so the slider default
+   * (EV 0 = 1.0×) lands at the same perceived brightness on both engines.
+   * ════════════════════════════════════════════════════════════════════════ */
+  const IS_SAFARI = (() => {
+    const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+    // Safari UA contains "Safari" but Chrome / Chromium / Android Chrome
+    // do too; the negative lookahead rejects those. Edge (Chromium) is
+    // also caught by the `chrome` token in its UA.
+    return /^((?!chrome|chromium|android).)*safari/i.test(ua);
+  })();
+  // Multiplier applied on top of the existing /1000 PQ normalisation on
+  // Safari. 5.0 cancels the observed 5× dimming. Set to 1.0 to disable.
+  const SAFARI_HDR_BOOST = IS_SAFARI ? '5.0' : '1.0';
+
+  /* ════════════════════════════════════════════════════════════════════════
    * Shared bits used by every WGSL block below.
    *
    * INPUT-TRANSFORM ARCHITECTURE
@@ -119,7 +141,7 @@ fn linearize_video_input(c: vec4<f32>) -> vec4<f32> { return c; }
       label: 'PQ EOTF — undo PQ encoding (default)',
       code: `
 fn linearize_video_input(c: vec4<f32>) -> vec4<f32> {
-  return vec4<f32>(pq_eotf(c.rgb) / 1000.0, c.a);
+  return vec4<f32>(pq_eotf(c.rgb) / 1000.0 * ${SAFARI_HDR_BOOST}, c.a);
 }
 `,
     },
@@ -135,7 +157,7 @@ fn linearize_video_input(c: vec4<f32>) -> vec4<f32> {
       label: 'PQ EOTF + BT.2020 → BT.709',
       code: `
 fn linearize_video_input(c: vec4<f32>) -> vec4<f32> {
-  let lin = pq_eotf(c.rgb) / 1000.0;
+  let lin = pq_eotf(c.rgb) / 1000.0 * ${SAFARI_HDR_BOOST};
   return vec4<f32>(bt2020_to_bt709(lin), c.a);
 }
 `,
