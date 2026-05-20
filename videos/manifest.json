@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T23:08:27.322895Z",
+  "generated_at": "2026-05-19T23:52:57.406945Z",
   "structure": {
     "stuttgart": {
       "gt": {
@@ -481,6 +481,13 @@
       },
       "limitations": {
         "20230416_130120": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "5379003-uhd_4096_2160_25fps": [
           "HDRCNN",
           "Input",
           "LEDiff",
@@ -1156,13 +1163,6 @@
           "LumiVid",
           "Ours"
         ],
-        "5379003-uhd_4096_2160_25fps": [
-          "HDRCNN",
-          "Input",
-          "LEDiff",
-          "LumiVid",
-          "Ours"
-        ],
         "7983982-hd_1920_1080_25fps": [
           "HDRCNN",
           "Input",
@@ -1178,13 +1178,6 @@
           "Ours"
         ],
         "9564079-uhd_4096_2160_25fps": [
-          "HDRCNN",
-          "Input",
-          "LEDiff",
-          "LumiVid",
-          "Ours"
-        ],
-        "9737883-uhd_3840_2160_24fps": [
           "HDRCNN",
           "Input",
           "LEDiff",
