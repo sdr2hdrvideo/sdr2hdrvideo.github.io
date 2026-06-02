@@ -47,16 +47,24 @@ window.App.toneMappers = (function () {
    * 5× dimmer than Chrome which could be matched via EV adjustment of +5 EV of HDR methods to match the SDR Input. We compensate at the linearize stage with an additional multiplier so the slider default
    * (EV 0 = 1.0×) lands at the same perceived brightness on both engines.
    * ════════════════════════════════════════════════════════════════════════ */
-  const IS_SAFARI = (() => {
+  // Chrome on iOS identifies as "CriOS" — NOT "Chrome" — so it passes the
+  // standard Safari negative-lookahead and would otherwise be misdetected as
+  // Safari. Detect it first so it can get its own boost level.
+  const IS_CHROME_IOS = (() => {
+    const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+    return /crios/i.test(ua);
+  })();
+  const IS_SAFARI = !IS_CHROME_IOS && (() => {
     const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
     // Safari UA contains "Safari" but Chrome / Chromium / Android Chrome
     // do too; the negative lookahead rejects those. Edge (Chromium) is
     // also caught by the `chrome` token in its UA.
     return /^((?!chrome|chromium|android).)*safari/i.test(ua);
   })();
-  // Multiplier applied on top of the existing /1000 PQ normalisation on
-  // Safari. 5.0 cancels the observed 5× dimming. Set to 1.0 to disable.
-  const SAFARI_HDR_BOOST = IS_SAFARI ? '10.0' : '1.0';
+  // Multipliers applied on top of the existing /1000 PQ normalisation.
+  // Chrome iOS needs 10× to match; true Safari (Mac + iOS) needs 40×
+  // (an additional +2 EV = 4× on top of Chrome iOS's 10×, observed empirically).
+  const SAFARI_HDR_BOOST = IS_SAFARI ? '40.0' : IS_CHROME_IOS ? '10.0' : '1.0';
 
   /* ════════════════════════════════════════════════════════════════════════
    * Shared bits used by every WGSL block below.

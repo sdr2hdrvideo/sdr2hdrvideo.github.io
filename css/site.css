@@ -1821,8 +1821,10 @@ input[type="range"].fps-slider {
   .tab-row { gap: 10px; }
   .pill-tab { padding: 4px 10px; font-size: 0.72rem; }
 
-  /* Thumbnail rail: smaller cards so more scenes peek into view. */
-  .thumb-card { width: 120px; }
+  /* Thumbnail rail: smaller cards so more scenes peek into view.
+     clamp keeps them legible (≥ 92px) on 320px phones while still
+     scaling up to 120px on a roomy tablet-portrait width. */
+  .thumb-card { width: clamp(92px, 28vw, 120px); }
 
   /* ── Per-panel control blocks (phone-only refinements) ──────────── */
   .comp-controls { gap: 10px; }
@@ -1886,11 +1888,21 @@ input[type="range"].fps-slider {
     aspect-ratio: 16 / 9;
   }
   /* Same centering trick for the playback bar when shown inside the
-     fullscreen stage. */
+     fullscreen stage (both native and pseudo). */
   .comp-stage:fullscreen .playback-bar,
-  .comp-stage:-webkit-full-screen .playback-bar {
+  .comp-stage:-webkit-full-screen .playback-bar,
+  .comp-stage.pseudo-fullscreen .playback-bar {
     flex-wrap: wrap;
     justify-content: center;
+  }
+  /* In fullscreen on a phone, the fps slider eats valuable horizontal
+     space that pushes the play/scrub/exposure controls onto extra
+     rows and squeezes the video panel. Hide it; the user already set
+     the desired fps before going fullscreen. */
+  .comp-stage:fullscreen .playback-fps,
+  .comp-stage:-webkit-full-screen .playback-fps,
+  .comp-stage.pseudo-fullscreen .playback-fps {
+    display: none;
   }
 
   /* ── Hover-zoom drawer: hidden on mobile (no hover affordance) ──── */
@@ -1913,19 +1925,29 @@ input[type="range"].fps-slider {
   }
 }
 
-/* ── Pseudo-fullscreen: CSS position:fixed overlay ──────────────────────
- * Fallback for browsers that don't support the Fullscreen API in regular
- * browser tabs (iOS Safari). Mirrors the key :fullscreen layout rules so
- * the stage looks and behaves the same as native fullscreen.
+/* ── Pseudo-fullscreen portal ────────────────────────────────────────────
+ * When native Fullscreen API is unavailable (iOS Safari in browser tabs),
+ * the stage is moved into a .pseudo-fs-overlay div appended directly to
+ * <body>. Anchoring to <body> guarantees the fixed overlay is unaffected
+ * by any ancestor overflow, transform, or stacking context in the page.
  * ────────────────────────────────────────────────────────────────────── */
-.comp-stage.pseudo-fullscreen {
+.pseudo-fs-overlay {
   position: fixed;
   inset: 0;
   z-index: 9000;
+  background: #000;
+  display: flex;           /* single flex child: the comp-stage */
+  overflow: hidden;
+}
+
+/* The stage fills the overlay completely and mirrors the :fullscreen layout:
+   scene-strip on left (row), content column (panel-grid + playback-bar). */
+.comp-stage.pseudo-fullscreen {
+  flex: 1 1 auto;
   display: flex;
-  flex-direction: row;       /* scene-strip on left, content on right */
-  width: 100vw;
-  height: 100svh;            /* svh avoids mobile address-bar overlap */
+  flex-direction: row;
+  min-width: 0;
+  min-height: 0;
   background: #000;
   padding: 0;
   margin: 0;
@@ -1983,7 +2005,7 @@ input[type="range"].fps-slider {
   display: none !important;
 }
 
-/* Mobile: flip to column so the scene strip becomes a top rail. */
+/* Mobile: flip to column so the scene strip becomes a horizontal top rail. */
 @media (max-width: 720px) {
   .comp-stage.pseudo-fullscreen {
     flex-direction: column;
@@ -2006,8 +2028,21 @@ input[type="range"].fps-slider {
     height: auto;
     aspect-ratio: 16 / 9;
   }
-  .comp-stage.pseudo-fullscreen .playback-bar {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  /* Playback-bar wrap+center is set in the 720px block above (the rule
+     covers native and pseudo fullscreen together). */
+}
+
+/* ── Very small phones (iPhone SE 1st gen, Galaxy Fold front, etc.) ──
+ * Below 400px there is no room for the "frame X / Y" readout next to
+ * the play button — the bar wraps awkwardly. Hide the readout text
+ * but keep the play/pause + scrub + EV + display-toggle + fullscreen
+ * controls, which are the actually useful affordances at this width. */
+@media (max-width: 400px) {
+  .playback-frame { display: none; }
+  /* Reduce gaps so the surviving controls still fit on one wrap-row. */
+  .playback-bar { gap: 6px; padding: 8px 8px; }
+  /* The display-mode toggle is two pill buttons. Tighten them. */
+  .dm-btn { padding: 2px 8px; font-size: 0.65rem; }
+  /* Slightly tighter section title so it doesn't dominate the viewport. */
+  .section-h2 { font-size: 1.3rem; }
 }

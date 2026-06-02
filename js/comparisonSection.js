@@ -991,10 +991,22 @@ window.App.comparisonSection = (function () {
         _syncCanvases();
       };
 
-      // CSS pseudo-fullscreen: position: fixed overlay used when the native
-      // Fullscreen API is unavailable (iOS Safari in regular browser tabs).
+      // CSS pseudo-fullscreen: portal the stage into a fixed overlay appended
+      // directly to <body> so no ancestor overflow/transform/stacking-context
+      // can clip or offset it. Falls back gracefully when native FS is absent
+      // (iOS Safari in regular browser tabs).
+      let _pseudoFsParent = null;
+      let _pseudoFsAnchor = null;
+      let _pseudoFsOverlay = null;
+
       const enterPseudoFS = () => {
         pseudoFS = true;
+        _pseudoFsParent = stage.parentElement;
+        _pseudoFsAnchor = stage.nextSibling;
+        _pseudoFsOverlay = document.createElement('div');
+        _pseudoFsOverlay.className = 'pseudo-fs-overlay';
+        document.body.appendChild(_pseudoFsOverlay);
+        _pseudoFsOverlay.appendChild(stage);
         stage.classList.add('pseudo-fullscreen');
         document.body.style.overflow = 'hidden';
         _onEnter();
@@ -1003,6 +1015,13 @@ window.App.comparisonSection = (function () {
       const exitPseudoFS = () => {
         pseudoFS = false;
         stage.classList.remove('pseudo-fullscreen');
+        if (_pseudoFsParent) {
+          _pseudoFsParent.insertBefore(stage, _pseudoFsAnchor);
+        }
+        if (_pseudoFsOverlay) {
+          _pseudoFsOverlay.remove();
+          _pseudoFsOverlay = null;
+        }
         document.body.style.overflow = '';
         _onExit();
       };
@@ -1013,18 +1032,33 @@ window.App.comparisonSection = (function () {
           (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
           return;
         }
-        // Try native fullscreen; fall back to pseudo-FS on rejection (iOS Safari).
+        // Try native fullscreen; fall back to pseudo-FS on either a sync
+        // throw (iOS Safari in browser tabs throws synchronously) or a
+        // rejected promise (some Android browsers). If req returns nothing
+        // (old webkit on Android) we trust fullscreenchange to confirm —
+        // and arm a short timeout that triggers pseudo-FS if the event
+        // never fires.
         const req = stage.requestFullscreen || stage.webkitRequestFullscreen;
-        if (req) {
-          let p;
-          try { p = req.call(stage); } catch (_e) { p = null; }
-          if (p && typeof p.catch === 'function') {
-            p.catch(() => enterPseudoFS());
-          }
-          // If req exists but returns nothing (old webkit), assume it worked;
-          // the fullscreenchange event will confirm.
-        } else {
+        if (!req) { enterPseudoFS(); return; }
+        let p;
+        try {
+          p = req.call(stage);
+        } catch (_e) {
           enterPseudoFS();
+          return;
+        }
+        if (p && typeof p.catch === 'function') {
+          p.catch(() => { if (!pseudoFS) enterPseudoFS(); });
+        } else {
+          // Old webkit returned undefined. Give it ~250ms to fire the
+          // fullscreenchange event; if it never does, fall back.
+          const fallbackTimer = setTimeout(() => {
+            const native = document.fullscreenElement || document.webkitFullscreenElement;
+            if (!native && !pseudoFS) enterPseudoFS();
+          }, 250);
+          const cancelTimer = () => clearTimeout(fallbackTimer);
+          document.addEventListener('fullscreenchange', cancelTimer, { once: true });
+          document.addEventListener('webkitfullscreenchange', cancelTimer, { once: true });
         }
       });
 
