@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Generating HDR Video from SDR Video</title>
-  <link rel="stylesheet" href="./css/site.css">
+  <!-- Emoji favicon: half-lit moon, standing in for the SDR→HDR dynamic-range
+       jump. Inlined as an SVG data URI so there is no extra asset to ship. -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌗</text></svg>">
+  <!-- ?v= is bumped whenever site.css changes so browsers (and GitHub
+       Pages' CDN) don't serve a stale stylesheet against new markup. -->
+  <link rel="stylesheet" href="./css/site.css?v=4">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JN312MQL4C"></script>
   <script>
@@ -17,32 +22,28 @@
 </head>
 <body>
 
-<!-- Display-mode prompt (SDR vs HDR) — shown once on first load -->
+<!-- Display-mode prompt (SDR vs HDR) — DISABLED. The mode is now chosen
+     automatically from the detected display (see defaultToneMode() in
+     main.js): HDR on a single HDR display, SDR otherwise. Markup kept
+     below, commented out, in case the choice is offered again.
+
 <div id="displayModePrompt" class="picker-overlay" hidden>
   <div class="picker-card picker-card-center">
-    <h2>Choose display mode</h2>
-    <p class="picker-chrome-notice">This demo works with Chrome 113+; recommended to open this page in Chrome.</p>
-
-    <div class="dmp-detect" data-role="dmpDetectBadge">
-      <span class="dmp-detect-dot"></span>
-      <span class="dmp-detect-text">checking display…</span>
-    </div>
-
-    <p data-role="dmpRecommend"></p>
+    <h2 data-role="dmpTitle">HDR display detected</h2>
+    <p class="dmp-lead" data-role="dmpLead"></p>
     <p class="dmp-multi" data-role="dmpMulti" hidden>
       Multiple displays detected. If one of them is an HDR display, for the best experience, please open this window on the HDR display.
     </p>
-    <p class="dmp-note" data-role="dmpNote" hidden>
-      This viewer has been tested on Mac HDR displays.
-    </p>
-    <p class="dmp-fineprint">You can switch modes any time using the SDR/HDR toggle in the floating control bar.</p>
 
     <div class="dmp-buttons">
-      <button type="button" class="primary-btn" data-dm-choice="extended">Use HDR</button>
+      <button type="button" class="primary-btn" data-dm-choice="extended">Keep HDR</button>
       <button type="button" class="ghost-btn"   data-dm-choice="standard">Use SDR</button>
     </div>
+
+    <p class="dmp-fineprint">Switch any time in the control bar.</p>
   </div>
 </div>
+-->
 
 <!-- Fatal-error overlay -->
 <div id="fatalOverlay" class="fatal-overlay" hidden>
@@ -58,23 +59,56 @@
   <!-- ── Title ─────────────────────────────────────────────────────────── -->
   <header class="paper-header">
     <h1 class="paper-title">Generating HDR Video from SDR Video</h1>
-    <p class="paper-eyebrow">Supplementary Website</p>
-    <p class="chrome-notice">Best experienced in Google Chrome</p>
+
+    <p class="paper-authors">
+      <span class="author"><a href="https://tedlasai.github.io/" target="_blank" rel="noopener">SaiKiran Tedla</a><sup>1,2</sup></span>
+      <span class="author"><a href="http://banterle.com/francesco/" target="_blank" rel="noopener">Francesco Banterle</a><sup>3</sup></span>
+      <span class="author">Trevor Canham<sup>2</sup></span>
+      <span class="author">Karanpreet Raja<sup>2</sup></span>
+      <span class="author"><a href="https://davidlindell.com/" target="_blank" rel="noopener">David B. Lindell</a><sup>4</sup></span>
+      <span class="author"><a href="https://www.cs.toronto.edu/~kyros/" target="_blank" rel="noopener">Kiriakos N. Kutulakos</a><sup>4</sup></span>
+      <span class="author"><a href="https://ddlee-cn.github.io/" target="_blank" rel="noopener">Jiacheng Li</a><sup>1</sup></span>
+      <span class="author"><a href="https://sites.google.com/view/feiranlihomepage/home" target="_blank" rel="noopener">Feiran Li</a><sup>1</sup></span>
+      <span class="author"><a href="https://ai.sony/people/daisuke-iso" target="_blank" rel="noopener">Daisuke Iso</a><sup>1</sup></span>
+    </p>
+
+    <p class="paper-affils">
+      <span class="affil"><sup>1</sup>Sony AI, Japan</span>
+      <span class="affil"><sup>2</sup>York University, Canada</span>
+      <span class="affil"><sup>3</sup>ISTI-CNR, Italy</span>
+      <span class="affil"><sup>4</sup>University of Toronto, Canada</span>
+    </p>
+
+    <p class="paper-venue">SIGGRAPH Asia, 2026</p>
+
+    <div class="paper-links">
+      <a class="paper-btn" href="https://arxiv.org/pdf/2605.14703" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="17" height="17" fill="none" stroke="currentColor"
+             stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M9.2 1.5H4.5A1.5 1.5 0 0 0 3 3v10a1.5 1.5 0 0 0 1.5 1.5h7A1.5 1.5 0 0 0 13 13V5.3z"/>
+          <path d="M9.2 1.5V5.3H13"/>
+        </svg>
+        <span>Paper</span>
+      </a>
+      <a class="paper-btn" href="https://github.com/SonyResearch/generative_sdr_to_hdr_video" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        <span>Code</span>
+      </a>
+    </div>
   </header>
 
   <!-- ── Abstract / intro ──────────────────────────────────────────────── -->
   <section class="abstract">
     <p>
-      We propose a framework for HDR video synthesis from casual SDR footage by
-      leveraging large-scale generative video models. A Multi-Exposure Video Model
-      (MEVM) predicts exposure-bracketed linear SDR video sequences from a single
-      nonlinear SDR input, and a learnable Video Merging Model (VMM) merges these
-      brackets into high-quality HDR, preserving detail in both shadows and
-      highlights. The viewer below presents side-by-side method comparisons
-      rendered from decoded HDR frames; scrub through frames, toggle
-      between SDR and HDR display, swap methods, and hover to inspect details.
+      The high dynamic range (HDR) video ecosystem is approaching maturity, but the problem of upconverting legacy standard dynamic range (SDR) videos persists without a convincing solution. 
+      We propose a framework for HDR video synthesis from casual SDR footage by leveraging a large-scale generative video model.  We introduce a Multi-Exposure Video Model (MEVM) that can predict exposure-bracketed linear SDR video sequences from a single nonlinear SDR video input.
+      We further propose a learnable Video Merging Model (VMM) that merges the predicted exposure-bracketed video into a high-quality HDR sequence while preserving detail in both shadows and highlights. 
+      Extensive experiments, quantitative and qualitative evaluation, and a user study demonstrate that our approach enables robust HDR conversion for in-the-wild examples from casual consumer videos and even cinematic footage. Finally, our model can support HDR synthesis pipelines built upon existing SDR generative video models.
     </p>
     <p class="abstract-hint">Scroll down to view results.</p>
+    <p class="chrome-notice">Best experienced in Google Chrome</p>
   </section>
 
   <!-- ── Floating control bar (display + global look) ──────────────────── -->
@@ -120,9 +154,9 @@
   </section>
 
   <section class="comp-section" data-section-id="cinema">
-    <h2 class="section-h2">Iconic Cinema Moments</h2>
+    <h2 class="section-h2">Cinema Moments</h2>
     <p class="section-desc">
-      We demonstrate our method on iconic cinema footage. Our
+      We demonstrate our method on cinema footage. Our
       pipeline produces temporally coherent HDR outputs that enhance detail in
       both bright and dark regions without amplifying compression or grain noise.
     </p>
@@ -166,7 +200,7 @@
   </section>
 
   <footer class="paper-footer">
-    <p>supplementary website</p>
+    <p>"Generating HDR Video from SDR Video" Project Page</p>
   </footer>
 </main>
 

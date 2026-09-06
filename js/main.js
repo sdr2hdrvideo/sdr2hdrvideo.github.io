@@ -90,13 +90,11 @@
     const manifest = await loadManifest();
     appState.manifest = manifest;
 
-    // ── Display-mode prompt ───────────────────────────────────────────
-    // Now that the user has access to videos, ask them once whether they
-    // want to view in SDR or HDR. HDR is recommended if they have a
-    // capable monitor — many reviewers won't know to flip the toggle in
-    // the floating nav otherwise. We pre-select based on detected HDR
-    // capability but always defer to the user's choice.
-    await showDisplayModePrompt();
+    // ── Display mode ──────────────────────────────────────────────────
+    // Chosen from the detected display, with no prompt. Must happen before
+    // mountSections() — each section reads the SDR/HDR radio for its
+    // initialToneMode.
+    setToneModeRadio(defaultToneMode());
 
     if (!appState.manifest) {
       const diag = document.getElementById('diagnostics');
@@ -326,114 +324,93 @@
     UI.setDiagnostics(diagEl, lines);
   }
 
-  /**
-   * After the folder picker, ask the user whether they want SDR or HDR
-   * display. The prompt surfaces an HDR-detection badge so the choice
-   * is unambiguous:
-   *   - HDR detected  → both buttons enabled, HDR encouraged.
-   *   - HDR not found → HDR button is greyed out (cannot be picked), SDR
-   *     auto-picked; we surface a "tested on Mac HDR displays" note. No
-   *     "recommend HDR" copy in this branch — the SDR display is all the
-   *     user has, telling them to get HDR is confusing.
-   *   - Multiple displays → reviewers are prompted to move the window to
-   *     their HDR display. Most useful when current display reports SDR
-   *     but another monitor on the system might be HDR-capable.
+  /* ── Display mode ─────────────────────────────────────────────────────
+   * The mode is chosen from the detected display rather than asked for:
+   *   - HDR display, single monitor → HDR
+   *   - SDR display                 → SDR
+   *   - multiple displays           → SDR, since we can't tell which
+   *     monitor the window will actually be viewed on.
+   *
+   * The SDR/HDR prompt that used to run here is commented out below,
+   * kept in case we want to offer the choice again.
    */
-  function showDisplayModePrompt() {
-    return new Promise((resolve) => {
-      const overlay = document.getElementById('displayModePrompt');
-      if (!overlay) { resolve(); return; }   // safety: no DOM, skip
 
-      const isHdr = detectHdrState() === HDR_STATE.HDR;
-      const isExtended =
-        (typeof window.screen !== 'undefined' && window.screen.isExtended === true);
-
-      const badgeEl     = overlay.querySelector('[data-role="dmpDetectBadge"]');
-      const badgeTextEl = badgeEl && badgeEl.querySelector('.dmp-detect-text');
-      const recommendEl = overlay.querySelector('[data-role="dmpRecommend"]');
-      const multiEl     = overlay.querySelector('[data-role="dmpMulti"]');
-      const noteEl      = overlay.querySelector('[data-role="dmpNote"]');
-      const hdrBtn      = overlay.querySelector('[data-dm-choice="extended"]');
-      const sdrBtn      = overlay.querySelector('[data-dm-choice="standard"]');
-
-      if (badgeEl) {
-        badgeEl.dataset.state = isHdr ? 'hdr' : 'sdr';
-        if (badgeTextEl) {
-          badgeTextEl.textContent = isHdr
-            ? '✓ HDR display detected'
-            : '✕ No HDR display detected';
-        }
-      }
-
-      if (recommendEl) {
-        if (isHdr) {
-          recommendEl.textContent = 'HDR rendering is recommended for the best experience.';
-        } else {
-          // No HDR display — don't recommend HDR; the user can't pick it
-          // anyway. Just tell them HDR is unavailable on this monitor.
-          recommendEl.textContent = 'HDR is unavailable on this display. Continue in SDR mode.';
-        }
-      }
-
-      // Multi-display prompt: useful in both branches — if SDR detected,
-      // perhaps the other monitor is HDR; if HDR detected, the user might
-      // still be looking at the SDR one.
-      if (multiEl) multiEl.hidden = !isExtended;
-      // "Tested on Mac HDR displays" — only show when no HDR is detected,
-      // so reviewers know the supported hardware before declaring it broken.
-      if (noteEl)  noteEl.hidden  = isHdr;
-
-      // When no HDR display is detected, block the HDR choice outright so
-      // there's no ambiguity. SDR becomes the only path forward.
-      if (hdrBtn) {
-        if (isHdr) {
-          hdrBtn.disabled = false;
-          hdrBtn.removeAttribute('aria-disabled');
-          hdrBtn.title = '';
-          hdrBtn.textContent = 'Use HDR';
-        } else {
-          hdrBtn.disabled = true;
-          hdrBtn.setAttribute('aria-disabled', 'true');
-          hdrBtn.title = 'HDR unavailable — no HDR display detected';
-          hdrBtn.textContent = 'HDR unavailable';
-        }
-      }
-      if (sdrBtn) {
-        // Promote SDR to "primary" when HDR is unavailable so users know
-        // which button is the only valid choice.
-        if (isHdr) {
-          sdrBtn.classList.remove('primary-btn');
-          sdrBtn.classList.add('ghost-btn');
-        } else {
-          sdrBtn.classList.add('primary-btn');
-          sdrBtn.classList.remove('ghost-btn');
-        }
-      }
-
-      overlay.hidden = false;
-      const ac = new AbortController();
-      const finish = (mode) => {
-        // Guard: if user somehow activates a disabled HDR button, fall
-        // back to SDR.
-        if (mode === 'extended' && !isHdr) mode = 'standard';
-        const std = document.getElementById('tmStandard');
-        const ext = document.getElementById('tmExtended');
-        if (mode === 'extended' && ext) {
-          ext.checked = true;
-          ext.dispatchEvent(new Event('change'));
-        } else if (std) {
-          std.checked = true;
-          std.dispatchEvent(new Event('change'));
-        }
-        overlay.hidden = true;
-        ac.abort();
-        resolve();
-      };
-      overlay.querySelectorAll('[data-dm-choice]').forEach(btn => {
-        btn.addEventListener('click', () => finish(btn.dataset.dmChoice), { signal: ac.signal });
-      });
-    });
+  /** Check the SDR/HDR radio without notifying sections. Sections read this
+   *  radio for their initialToneMode, so this must run before mounting. */
+  function setToneModeRadio(mode) {
+    const el = document.getElementById(mode === 'extended' ? 'tmExtended' : 'tmStandard');
+    if (el) el.checked = true;
   }
+
+  /** Pick the default mode for this display. */
+  function defaultToneMode() {
+    const isHdr = detectHdrState() === HDR_STATE.HDR;
+    const isMulti =
+      (typeof window.screen !== 'undefined' && window.screen.isExtended === true);
+    return (isHdr && !isMulti) ? 'extended' : 'standard';
+  }
+
+  /* ── Disabled: SDR/HDR prompt ─────────────────────────────────────────
+   * Shown on load, asking the user to confirm the display mode. Replaced
+   * by defaultToneMode() above. Kept here for reference.
+   *
+   * function applyToneMode(mode) {
+   *   const el = document.getElementById(mode === 'extended' ? 'tmExtended' : 'tmStandard');
+   *   if (!el) return;
+   *   el.checked = true;
+   *   el.dispatchEvent(new Event('change'));
+   * }
+   *
+   * function showDisplayModePrompt() {
+   *   const overlay = document.getElementById('displayModePrompt');
+   *   if (!overlay) return;
+   *
+   *   const isHdr = detectHdrState() === HDR_STATE.HDR;
+   *   const isMulti =
+   *     (typeof window.screen !== 'undefined' && window.screen.isExtended === true);
+   *
+   *   // Nothing to offer on a single SDR display — stay quiet.
+   *   if (!isHdr && !isMulti) return;
+   *
+   *   const titleEl = overlay.querySelector('[data-role="dmpTitle"]');
+   *   const leadEl  = overlay.querySelector('[data-role="dmpLead"]');
+   *   const multiEl = overlay.querySelector('[data-role="dmpMulti"]');
+   *   const hdrBtn  = overlay.querySelector('[data-dm-choice="extended"]');
+   *   const sdrBtn  = overlay.querySelector('[data-dm-choice="standard"]');
+   *
+   *   if (titleEl) titleEl.textContent = isHdr ? 'HDR display detected'
+   *                                            : 'Multiple displays detected';
+   *   if (leadEl)  leadEl.innerHTML    = isHdr ? 'Showing results in <strong>HDR</strong>.'
+   *                                            : 'Showing results in <strong>SDR</strong>.';
+   *   if (multiEl) multiEl.hidden = !isMulti;
+   *
+   *   // Without an HDR display the HDR button can't do anything useful, so
+   *   // it stays disabled and SDR becomes the emphasised choice.
+   *   if (hdrBtn) {
+   *     hdrBtn.disabled = !isHdr;
+   *     hdrBtn.textContent = isHdr ? 'Keep HDR' : 'HDR unavailable';
+   *     if (isHdr) hdrBtn.removeAttribute('aria-disabled');
+   *     else       hdrBtn.setAttribute('aria-disabled', 'true');
+   *   }
+   *   if (sdrBtn) {
+   *     sdrBtn.classList.toggle('primary-btn', !isHdr);
+   *     sdrBtn.classList.toggle('ghost-btn',    isHdr);
+   *     sdrBtn.textContent = isHdr ? 'Use SDR' : 'Continue in SDR';
+   *   }
+   *
+   *   overlay.hidden = false;
+   *
+   *   const ac = new AbortController();
+   *   const close = (mode) => {
+   *     ac.abort();
+   *     if (mode) applyToneMode(mode === 'extended' && !isHdr ? 'standard' : mode);
+   *     overlay.hidden = true;
+   *   };
+   *   overlay.querySelectorAll('[data-dm-choice]').forEach(btn => {
+   *     btn.addEventListener('click', () => close(btn.dataset.dmChoice), { signal: ac.signal });
+   *   });
+   * }
+   */
 
   boot().catch(err => {
     console.error('Boot failed:', err);
