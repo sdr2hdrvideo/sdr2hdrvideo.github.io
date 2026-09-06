@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-19T23:52:57.406945Z",
+  "generated_at": "2026-09-06T06:26:46.897889Z",
   "structure": {
     "stuttgart": {
       "gt": {
@@ -49,14 +49,6 @@
           "Ours"
         ],
         "bistro_03": [
-          "GT",
-          "HDRCNN",
-          "Input",
-          "LEDiff",
-          "LumiVid",
-          "Ours"
-        ],
-        "carousel_fireworks_02": [
           "GT",
           "HDRCNN",
           "Input",
@@ -380,7 +372,63 @@
     },
     "wild": {
       "cinema": {
-        "backtofuture_1280x704_17frames_from_50s": [
+        "bigbuckbunny_1280x704_17frames_from_190p5s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "bigbuckbunny_1280x704_17frames_stride2_from_372s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "caminandes_1280x704_17frames_from_90s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "charge_1280x704_17frames_from_182s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "charge_1280x704_17frames_from_81s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "cosmos_1280x704_17frames_from_350s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "cosmos_1280x704_17frames_from_474s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "cosmos_1280x704_17frames_from_489s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "cosmos_1280x704_17frames_from_519s": [
           "HDRCNN",
           "Input",
           "LEDiff",
@@ -450,6 +498,27 @@
           "LumiVid",
           "Ours"
         ],
+        "sintel_1280x704_17frames_from_179s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "sintel_1280x704_17frames_from_294s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "sintel_1280x704_17frames_from_542s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
         "spiderman2_1280x704_17frames_stride2_from_33s": [
           "HDRCNN",
           "Input",
@@ -472,6 +541,20 @@
           "Ours"
         ],
         "spiderman3_1280x704_17frames_stride2_from_298s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "stem2_1280x704_17frames_from_252s": [
+          "HDRCNN",
+          "Input",
+          "LEDiff",
+          "LumiVid",
+          "Ours"
+        ],
+        "stem2_1280x704_17frames_from_583s": [
           "HDRCNN",
           "Input",
           "LEDiff",
@@ -1373,21 +1456,7 @@
           "LumiVid",
           "Ours"
         ],
-        "coverr-view-of-a-shopping-mall-1583-1080p": [
-          "HDRCNN",
-          "Input",
-          "LEDiff",
-          "LumiVid",
-          "Ours"
-        ],
         "irwin": [
-          "HDRCNN",
-          "Input",
-          "LEDiff",
-          "LumiVid",
-          "Ours"
-        ],
-        "tokyo_1280x704_17frames_from_0s": [
           "HDRCNN",
           "Input",
           "LEDiff",
